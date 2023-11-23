@@ -1,33 +1,25 @@
-import Link from 'next/link';
+import NavLink from '../components/navLink';
 
 const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-inner">
-      <img src="/logo.png" alt="Logo" className="main-logo" />
+        <img src="/logo.png" alt="Logo" className="main-logo" />
         <img src="/a.png" alt="Additional Logo" className="additional-logo" />
-        <Link href="/dashboard">
-          <span className="navbar-link">Dashboard</span>
-        </Link>
+        <NavLink href="/dashboard">Dashboard</NavLink>
         <img src="/b.png" alt="Additional Logo" className="additional-logo" />
-        <Link href="/connectors">
-          <span className="navbar-link">Connectors</span>
-        </Link>
+        <NavLink href="/connectors">Connectors</NavLink>
         <img src="/c.png" alt="Additional Logo" className="additional-logo" />
-        <Link href="/devices">
-          <span className="navbar-link">Devices</span>
-        </Link>
+        <NavLink href="/devices">Devices</NavLink>
         <img src="/d.png" alt="Additional Logo" className="additional-logo" />
-        <Link href="/settings">
-          <span className="navbar-link">General Settings</span>
-        </Link>
+        <NavLink href="/settings">General Settings</NavLink>
       </div>
       <div className="user-info">
-      <img src="/e.png" alt="Additional Logo" className="additional-logo" />
-        <span> Roberts ▼</span> 
+        <img src="/e.png" alt="User" className="user-icon" />
+        <span>Roberts ▼</span> 
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;

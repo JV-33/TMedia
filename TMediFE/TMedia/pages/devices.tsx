@@ -1,6 +1,5 @@
-// pages/devices.tsx
 import Navbar from '../app/Navbar';
-import '../app/globals.css'; // Importējiet CSS failu ar jaunajām stilu definīcijām
+import '../app/globals.css';
 import DevicesTable from '../components/DevicesTable';
 
 const OverlayComponent = () => {
@@ -12,7 +11,6 @@ const OverlayComponent = () => {
 };
 
 const Devices = () => {
-  // ... esošais kodu ...
   return (
     <div className="main-container">
       <Navbar />

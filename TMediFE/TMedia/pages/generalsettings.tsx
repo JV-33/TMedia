@@ -1,4 +1,3 @@
-// pages/generalSettings.tsx
 import Navbar from '../app/Navbar';
 import '../app/globals.css';
 

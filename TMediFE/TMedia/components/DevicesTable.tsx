@@ -1,12 +1,14 @@
+// DevicesTable.tsx
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { API_BASE_URL } from '../config';
+import DeviceFilter from './deviceFilter';
+import DeviceItem from './deviceItem';
 
-// Definējiet tipus jūsu ierīču datiem atbilstoši jūsu API atbildei
 interface Device {
   id: number;
   name: string;
   model: string;
-  description: string;
   connectionPercentage: number;
   messagesOverLastDays: number;
   totalPossibleMessages: number;
@@ -24,9 +26,9 @@ const DevicesTable = () => {
   useEffect(() => {
     const fetchDevices = async () => {
       try {
-        const response = await axios.get<Device[]>('http://localhost:5062/api/Devices');
+        const response = await axios.get<Device[]>(`${API_BASE_URL}/Devices`);
         setDevices(response.data);
-        setFilteredDevices(response.data); // Sākotnēji iestatiet filtrētos ierīču datus
+        setFilteredDevices(response.data);
       } catch (error) {
         console.error('There was an error fetching the devices:', error);
         setError('Kļūda iegūstot datus. Lūdzu, mēģiniet vēlāk.');
@@ -55,54 +57,27 @@ const DevicesTable = () => {
 
   return (
     <div className="device-container my-8 p-6 bg-gray-100 shadow-md rounded-lg">
-      <div className="buttons-wrapper">
-        <div className="button-container-group">
-          <div className={`button-container ${isOnlineFilterActive ? 'online' : ''}`}>
-            <button className="button-style button-style-small" onClick={() => filterDevices(true)}>
-              Online
-            </button>
-            <div className="count-container">{onlineDevicesCount}</div>
-          </div>
-          <div className={`button-container ${!isOnlineFilterActive ? 'offline' : ''}`}>
-            <button className="button-style button-style-small" onClick={() => filterDevices(false)}>
-              Offline
-            </button>
-            <div className="count-container">{offlineDevicesCount}</div>
-          </div>
-        </div>
-        <div className="search-container">
-          <input 
-            type="text" 
-            placeholder="Quick Search..."
-            className="search-input"/>
-        </div>
+      <DeviceFilter
+        onlineCount={onlineDevicesCount}
+        offlineCount={offlineDevicesCount}
+        onFilterChange={filterDevices}
+        isOnlineFilterActive={isOnlineFilterActive}
+      />
+
+      <div className="search-container">
+        <input type="text" placeholder="Quick Search..." className="search-input"/>
       </div>
 
       {filteredDevices.map((device) => (
-        <div key={device.id} className="device-data-container" onClick={() => handleDeviceClick(device.id)}>
-           <div className="status-dot"></div>
-          <div className="data-field">
-            <div>{device.name}</div>
-            <div className="connection-percentage">connection: {`${device.connectionPercentage}%`}</div>
-          </div>
-          <div className="data-field">
-            <div className="data-title">Model</div>
-            <div>{device.model}</div>
-          </div>
-          <div className="data-field">
-            <div className="data-title">Con-stat</div>
-            <div>{`${device.messagesOverLastDays}/${device.totalPossibleMessages} messages over 28 days`}</div>
-          </div>
-          {selectedDeviceId === device.id && (
-            <div className="button-group">
-              <button className="details-button">Settings</button>
-              <button className="details-button">Control</button>
-            </div>
-          )}
-          <button className="details-button">&gt;</button>
-        </div>
+        <DeviceItem
+          key={device.id}
+          device={device}
+          isSelected={selectedDeviceId === device.id}
+          onClick={handleDeviceClick}
+        />
       ))}
-            <div className="device-list-info">
+
+      <div className="device-list-info">
         Showing {filteredDevices.length > 0 ? 1 : 0} - {filteredDevices.length} of {devices.length} devices
       </div>
     </div>

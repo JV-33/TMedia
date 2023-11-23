@@ -184,15 +184,20 @@ body {
   align-items: center;
   gap: 10px;
   position: absolute;
-  right: 5cm;
+  right: 5cm; 
   background-color: #000020;
   padding: 0.25rem 0.75rem;
   border: 1px solid #07074e;
   border-radius: 0.375rem;
   color: #e8ebf0;
-  font-size: 1.125rem;
+  font-size: 0.875rem;
   cursor: pointer;
   z-index: 10;
+}
+
+.user-icon {
+  max-width: 30px; 
+  max-height: 30px; 
 }
 
 .button-container {
